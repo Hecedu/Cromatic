@@ -5,7 +5,7 @@ export default function Navbar() {
         <nav className="navbar navbar-expand navbar-dark bg-dark fixed-bottom">
             <div className="container-fluid">
                 <a className="navbar-brand">
-                    <img className="img-fluid" style={{ "height": '2em' }}
+                    <img className="img-fluid" style={{ "height": '1.5em', "width" : "auto" }}
                         src={`${process.env.PUBLIC_URL}/images/Cromatic.png`}
                         alt="logo" />
                 </a>
@@ -19,7 +19,7 @@ export default function Navbar() {
                         </li>
                     </ul>
                 </div>
-                <a className="nav-link text-white" aria-current="page" href="https://www.linkedin.com/in/h%C3%A9ctor-maga%C3%B1a/">Hector Magana 😎</a>
+                <a className="nav-link text-white small" aria-current="page" href="https://www.linkedin.com/in/h%C3%A9ctor-maga%C3%B1a/">Hector Magana</a>
             </div>
         </nav>
 
