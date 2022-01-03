@@ -36,6 +36,17 @@ function App() {
     <div className="App" style={{ backgroundColor: selectedColor }}>
       <Navbar />
       <div className="d-flex align-items-center vh-100">
+        <div className="btn-group btn-group-toggle" data-toggle="buttons">
+          <label className="btn btn-secondary">
+            Active
+          </label>
+          <label className="btn btn-secondary">
+            Radio
+          </label>
+          <label className="btn btn-secondary">
+            Radio
+          </label>
+        </div>
         <div className='container align-middle '>
           <div className='row align-items-center'>
             <div className='col-12 col-xl-2 d-flex justify-content-center mx-0 my-2'>
