@@ -7,19 +7,15 @@ import ColorDisplay from './Components/ColorDisplay';
 
 function App() {
   const [selectedColor, setSelectedColor] = useState('#942c2c');
-  const [whiteColorList, setWhiteColorList] = useState<any[]>([])
-  const [blackColorList, setBlackColorList] = useState<any[]>([])
+  const [backgroundColor, setBackgroundColor] = useState('#942c2c');
+  const [colorList, setColorList] = useState<any[]>([])
 
   useEffect(() => {
-    var whiteGradient = chroma.bezier(['white', selectedColor])
-      .scale()
-      .colors(4);
-    setWhiteColorList(whiteGradient)
+    var colorScale = chroma.scale(['white', selectedColor, 'black']).mode('lab')
+      .colors(7 + 2);
+    setColorList(colorScale.filter(c => c !== '#ffffff' && c !== '#000000'))
 
-    var blackGradient = chroma.bezier([selectedColor, 'black'])
-      .scale()
-      .colors(4);
-    setBlackColorList(blackGradient)
+    setBackgroundColor(chroma(selectedColor).desaturate(0.5).darken(1).hex())
 
   }, [selectedColor])
 
@@ -33,28 +29,16 @@ function App() {
   };
 
   return (
-    <div className="App" style={{ backgroundColor: selectedColor }}>
+    <div className="App" style={{ backgroundColor: backgroundColor }}>
       <Navbar />
       <div className="d-flex align-items-center vh-100">
-        <div className="btn-group btn-group-toggle" data-toggle="buttons">
-          <label className="btn btn-secondary">
-            Active
-          </label>
-          <label className="btn btn-secondary">
-            Radio
-          </label>
-          <label className="btn btn-secondary">
-            Radio
-          </label>
-        </div>
         <div className='container align-middle '>
           <div className='row align-items-center'>
             <div className='col-12 col-xl-2 d-flex justify-content-center mx-0 my-2'>
               <HexColorPicker color={selectedColor} onChange={handleChangeComplete} />
             </div>
             <div className='col'>
-              <ColorDisplay colorList={whiteColorList} />
-              <ColorDisplay colorList={blackColorList} />
+              <ColorDisplay colorList={colorList} />
             </div>
           </div>
         </div>
