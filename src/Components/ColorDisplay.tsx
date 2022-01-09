@@ -5,12 +5,12 @@ interface ColorDisplayProps {
   }
 export default function ColorDisplay({ colorList }: ColorDisplayProps) {
     return (
-        <div className='row my-4 mx-auto d-flex justify-content-center'>
+        <div className='row m-2 d-flex justify-content-center bg-dark rounded-3 shadow'>
         {
-          colorList.map(c => <div className='col-3 text-center m-2 rounded-3 py-4 shadow'
+          colorList.map(c => <div className='col-3 text-center py-4 m-2 rounded-3 shadow'
               style={{ backgroundColor: c }}
               onClick={() => navigator.clipboard.writeText(c)}>
-              <p className='m-0 bg-white'>{c}</p>
+              <p className='m-0 mx-auto bg-white'>{c}</p>
           </div>)
         }
       </div>
