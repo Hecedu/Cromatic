@@ -8,42 +8,51 @@ import { paletteActions } from '../Store/PaletteSlice';
 export default function PaletteProperties() {
     const dispatch = useDispatch()
     const selectedColors = useStoreSelector((state) => state.palette.selectedColors);
-    const [seedNumber, setSeedNumber] = useState('1');
+    const numberOfColors = useStoreSelector((state) => state.palette.numberOfInputColors);
 
-    const handleChangeComplete = (color: any) => {
+    const handleColorPickerChange = (color: any) => {
         dispatch(paletteActions.setSelectedColors({ selectedColors: [color, color, color] }))
     };
+    const setMethod= (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(paletteActions.setMethod({ method: e.target.value }))
+    }
+    const setNumberOfInputColors = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(paletteActions.setNumberOfInputColors({ numberOfInputColors: e.currentTarget.value }))
+    }
+    const setNumberOfOutputColors = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(paletteActions.setNumberOfOutputColors({ numberOfOutputColors: e.currentTarget.value }))
+    }
 
     const radios = [
-        { name: 'Solo', value: '1' },
-        { name: 'Duo', value: '2' },
-        { name: 'Trio', value: '3' },
+        { name: 'Solo', value: 1 },
+        { name: 'Duo', value: 2 },
+        { name: 'Trio', value: 3 },
     ];
     return (
-        <div className='mx-5'>
-            <div className=''>
-                <div className='container'>
-                    <div className='row d-flex justify-content-center'>
-                        <HexColorPicker className="small" color={selectedColors[0]} onChange={handleChangeComplete} />
-                    </div>
-                    <div className='row text-center my-1'>
-                        <h4>
-                            <span className="badge bg-dark">Color 1</span>
-                        </h4>
-                    </div>
+        <div>
+            <div className='container'>
+                <div className='row d-flex justify-content-center'>
+                    <HexColorPicker className="small" color={selectedColors[0]} onChange={handleColorPickerChange} />
+                </div>
+                <div className='row text-center'>
+                    <h4 className='m-1'>
+                        <span className="badge bg-dark">Color 1</span>
+                    </h4>
                 </div>
             </div>
+
             <div className="d-flex justify-content-center">
-                <Form.Select className="m-2" size='sm'>
-                    <option>Detail</option>
-                    <option value='3'>3</option>
-                    <option value='6'>6</option>
-                    <option value='9'>9</option>
+                <Form.Select className="m-1" size='sm' onChange={(e) => {setNumberOfOutputColors(e)}}>
+                    <option value={3}>3</option>
+                    <option selected value={6}>6</option>
+                    <option value={9}>9</option>
                 </Form.Select>
-                <Form.Select className="m-2" size='sm'>
-                    <option>Method</option>
-                    <option value='3'>lab</option>
-                    <option value='6'>bezier</option>
+                <Form.Select className="m-1" size='sm' onChange= {(e) => {setMethod(e)}}>
+                    <option value='lab'>lab</option>
+                    <option value='hsl'>hsl</option>
+                    <option value='lch'>lch</option>
+                    <option value='rgb'>rgb</option>
+                    <option value='lrgb'>linear rgb</option>
                 </Form.Select>
             </div>
             <ButtonGroup className="d-flex justify-content-center p-2">
@@ -55,8 +64,8 @@ export default function PaletteProperties() {
                         type="radio"
                         variant="dark"
                         value={radio.value}
-                        checked={seedNumber === radio.value}
-                        onChange={(e) => setSeedNumber(e.currentTarget.value)}
+                        checked={numberOfColors === radio.value}
+                        onChange={(e) => setNumberOfInputColors(e)}
                     >
                         {radio.name}
                     </ToggleButton>
