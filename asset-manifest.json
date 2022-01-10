@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Cromatic/static/css/main.9cea6cbf.css",
-    "main.js": "/Cromatic/static/js/main.0ab08bba.js",
+    "main.js": "/Cromatic/static/js/main.4cda2d1a.js",
     "static/js/787.5e7238f4.chunk.js": "/Cromatic/static/js/787.5e7238f4.chunk.js",
     "index.html": "/Cromatic/index.html",
     "main.9cea6cbf.css.map": "/Cromatic/static/css/main.9cea6cbf.css.map",
-    "main.0ab08bba.js.map": "/Cromatic/static/js/main.0ab08bba.js.map",
+    "main.4cda2d1a.js.map": "/Cromatic/static/js/main.4cda2d1a.js.map",
     "787.5e7238f4.chunk.js.map": "/Cromatic/static/js/787.5e7238f4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9cea6cbf.css",
-    "static/js/main.0ab08bba.js"
+    "static/js/main.4cda2d1a.js"
   ]
 }
