@@ -13,7 +13,7 @@ export default function PaletteProperties() {
     const handleColorPickerChange = (color: any) => {
         dispatch(paletteActions.setSelectedColors({ selectedColors: [color, color, color] }))
     };
-    const setMethod= (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const setMethod = (e: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(paletteActions.setMethod({ method: e.target.value }))
     }
     const setNumberOfInputColors = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,28 +31,30 @@ export default function PaletteProperties() {
     return (
         <div>
             <div className='container'>
+                <div className='row text-center'>
+                    <h4 className='m-1'>
+                        <span className="badge bg-dark">Properties</span>
+                    </h4>
+                </div>
                 <div className='row d-flex justify-content-center'>
                     <HexColorPicker className="small" color={selectedColors[0]} onChange={handleColorPickerChange} />
                 </div>
-                <div className='row text-center'>
-                    <h4 className='m-1'>
-                        <span className="badge bg-dark">Color 1</span>
-                    </h4>
-                </div>
             </div>
 
-            <div className="d-flex justify-content-center">
-                <Form.Select className="m-1" size='sm' onChange={(e) => {setNumberOfOutputColors(e)}}>
+            <div className="d-flex">
+                <Form.Select className="m-1" size='sm' onChange={(e) => { setNumberOfOutputColors(e) }}>
+                    <option value={6} selected disabled>Detail</option>
                     <option value={3}>3</option>
-                    <option selected value={6}>6</option>
+                    <option value={6}>6</option>
                     <option value={9}>9</option>
                 </Form.Select>
-                <Form.Select className="m-1" size='sm' onChange= {(e) => {setMethod(e)}}>
+                <Form.Select className="m-1 " size='sm' onChange={(e) => { setMethod(e) }}>
+                    <option value="Mode" selected disabled>Mode</option>
                     <option value='lab'>lab</option>
                     <option value='hsl'>hsl</option>
                     <option value='lch'>lch</option>
                     <option value='rgb'>rgb</option>
-                    <option value='lrgb'>linear rgb</option>
+                    <option value='lrgb'>Linear rgb</option>
                 </Form.Select>
             </div>
             <ButtonGroup className="d-flex justify-content-center p-2">

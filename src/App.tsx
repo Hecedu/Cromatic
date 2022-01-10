@@ -3,12 +3,10 @@ import chroma from 'chroma-js';
 import './custom.scss'
 import Navbar from './Components/Navbar';
 import ColorDisplay from './Components/ColorDisplay';
-import { useDispatch } from 'react-redux';
 import { useStoreSelector } from './Store';
 import PaletteProperties from './Components/PaletteProperties';
 
 function App() {
-  const dispatch = useDispatch()
   const selectedColors = useStoreSelector((state) => state.palette.selectedColors);
   const method = useStoreSelector((state) => state.palette.method);
   const numberOfOutputColors = useStoreSelector((state) => state.palette.numberOfOutputColors);
