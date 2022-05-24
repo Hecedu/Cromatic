@@ -1,28 +1,37 @@
-import React from 'react'
-import Ripples from 'react-ripples'
+import React from "react";
+import Ripples from "react-ripples";
 
 interface ColorDisplayProps {
   colorList: string[];
 }
 export default function ColorDisplay({ colorList }: ColorDisplayProps) {
   return (
-    <>
-      <div className='row text-center'>
-        <h4 className=''>
-          <span className="badge bg-dark">Palette</span>
-        </h4>
+    <div className="d-flex flex-column">
+      <div className="d-flex justify-content-center mb-2">
+        <div className="badge bg-dark">
+          <h5>Palette</h5>
+          <p>Click/Tap color to copy to clipboard</p>
+        </div>
       </div>
-      <div className='row mb-2 mx-1 d-flex justify-content-center bg-dark rounded-3 shadow text-center'>
-        {
-          colorList.map(c => <Ripples className="col-3 p-0 text-center m-2 rounded-3 shadow"
-            onClick={() => navigator.clipboard.writeText(c)}>
-            <div className="py-3" style={{ backgroundColor: c, width: '100%', height: '100%' }}>
-              <p className='m-0 bg-white small'>{c}</p>
+      <div className="d-flex justify-content-center mb-2 container">
+        <div className="d-flex flex-wrap justify-content-center bg-dark rounded-3 shadow text-center w-100">
+          {colorList.map((c) => (
+            <div style={{width: "calc(100% / 3)"}}>
+              <Ripples
+                className="p-2 text-center rounded-3 w-100"
+                onClick={() => navigator.clipboard.writeText(c)}
+              >
+                <div
+                  className="w-100 py-4 rounded"
+                  style={{ backgroundColor: c }}
+                >
+                  <p className="my-1 shadow-sm bg-white w-100">{c}</p>
+                </div>
+              </Ripples>
             </div>
-          </Ripples>
-          )
-        }
+          ))}
+        </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }

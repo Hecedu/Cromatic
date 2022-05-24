@@ -1,43 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import chroma from 'chroma-js';
-import './custom.scss'
-import Navbar from './Components/Navbar';
-import ColorDisplay from './Components/ColorDisplay';
-import { useStoreSelector } from './Store';
-import PaletteProperties from './Components/PaletteProperties';
+import React, { useEffect, useState } from "react";
+import chroma from "chroma-js";
+import "./custom.scss";
+import Navbar from "./Components/Navbar";
+import ColorDisplay from "./Components/ColorDisplay";
+import { useStoreSelector } from "./Store";
+import PaletteProperties from "./Components/PaletteProperties";
 
 function App() {
-  const selectedColors = useStoreSelector((state) => state.palette.selectedColors);
+  const selectedColors = useStoreSelector(
+    (state) => state.palette.selectedColors
+  );
   const method = useStoreSelector((state) => state.palette.method);
-  const numberOfOutputColors = useStoreSelector((state) => state.palette.numberOfOutputColors);
+  const numberOfInputColors = useStoreSelector(
+    (state) => state.palette.numberOfInputColors
+  );
+  const numberOfOutputColors = useStoreSelector(
+    (state) => state.palette.numberOfOutputColors
+  );
 
-  const [backgroundColor, setBackgroundColor] = useState(selectedColors[0]);
-  const [colorList, setColorList] = useState<any[]>([])
+  const [colorList, setColorList] = useState<any[]>([]);
+  const [backgroundString, setBackgroundString] = useState("");
 
   useEffect(() => {
-    var colorScale = chroma.scale(['white', selectedColors[0], 'black'])
+    var colorGenerationArray = [""];
+    if (numberOfInputColors == 1 || selectedColors.every(color => color == selectedColors[1])) {
+      colorGenerationArray = ["white", selectedColors[0], "black"];
+      setBackgroundString(`${selectedColors[0]}`);
+    } else if (numberOfInputColors == 2) {
+      colorGenerationArray = [selectedColors[0], selectedColors[1]];
+      setBackgroundString(
+        `linear-gradient(-225deg, ${selectedColors[0]}, ${selectedColors[1]})`
+      );
+    } else if (numberOfInputColors == 3) {
+      colorGenerationArray = [
+        selectedColors[0],
+        selectedColors[1],
+        selectedColors[2],
+      ];
+      setBackgroundString(
+        `linear-gradient(-225deg, ${selectedColors[0]}, ${selectedColors[1]}, ${selectedColors[2]})`
+      );
+    }
+  
+    var colorScale = chroma
+      .scale(colorGenerationArray)
       .mode(method)
-      .correctLightness()
-      .colors(Number(numberOfOutputColors) + 1);
+      .colors(numberOfOutputColors);
     var uniqueColorScale = [...Array.from(new Set(colorScale))];
-    setColorList(uniqueColorScale.filter(c => c !== '#000000'))
-    setBackgroundColor(chroma(selectedColors[0]).desaturate(1).brighten().hex())
-
-  }, [selectedColors, numberOfOutputColors, method])
+    setColorList(uniqueColorScale);
+  }, [selectedColors, numberOfInputColors, numberOfOutputColors, method]);
 
   useEffect(() => {
     document.title = "Cromatic";
   }, []);
 
-  function invertHex(hex: string) {
-    return (Number(`0x1${hex}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
-  }
-
   return (
-    <div className="App" style={{ backgroundColor: backgroundColor }}>
+    <div
+      className="App"
+      style={{
+        background: backgroundString,
+      }}
+    >
       <Navbar />
       <div className="main-content d-flex align-items-center justify-content-center">
-        <div className='container'>
+        <div className="container">
           <ColorDisplay colorList={colorList} />
           <PaletteProperties />
         </div>
