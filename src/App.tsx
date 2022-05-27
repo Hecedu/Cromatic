@@ -5,31 +5,40 @@ import Navbar from "./Components/Navbar";
 import ColorDisplay from "./Components/ColorDisplay";
 import { useStoreSelector } from "./Store";
 import PaletteProperties from "./Components/PaletteProperties";
+import { useDispatch } from "react-redux";
+import { paletteActions } from "./Store/PaletteSlice";
 
 function App() {
+  const dispatch = useDispatch();
   const selectedColors = useStoreSelector(
     (state) => state.palette.selectedColors
   );
-  const method = useStoreSelector((state) => state.palette.method);
+  const outputColors = useStoreSelector(
+    (state) => state.palette.outputColors
+  );
+  const colorGenerationMode = useStoreSelector(
+    (state) => state.palette.colorGenerationMode
+  );
   const numberOfInputColors = useStoreSelector(
     (state) => state.palette.numberOfInputColors
   );
   const numberOfOutputColors = useStoreSelector(
     (state) => state.palette.numberOfOutputColors
   );
-
-  const [colorList, setColorList] = useState<any[]>([]);
   const [backgroundString, setBackgroundString] = useState("");
 
   useEffect(() => {
     var colorGenerationArray = [""];
-    if (numberOfInputColors == 1 || selectedColors.every(color => color == selectedColors[1])) {
+    if (
+      numberOfInputColors == 1 ||
+      selectedColors.every((color) => color == selectedColors[1])
+    ) {
       colorGenerationArray = ["white", selectedColors[0], "black"];
-      setBackgroundString(`${selectedColors[0]}`);
+      setBackgroundString(`${colorGenerationArray[1]}`);
     } else if (numberOfInputColors == 2) {
       colorGenerationArray = [selectedColors[0], selectedColors[1]];
       setBackgroundString(
-        `linear-gradient(-225deg, ${selectedColors[0]}, ${selectedColors[1]})`
+        `linear-gradient(-225deg, ${colorGenerationArray[0]}, ${colorGenerationArray[1]})`
       );
     } else if (numberOfInputColors == 3) {
       colorGenerationArray = [
@@ -38,17 +47,22 @@ function App() {
         selectedColors[2],
       ];
       setBackgroundString(
-        `linear-gradient(-225deg, ${selectedColors[0]}, ${selectedColors[1]}, ${selectedColors[2]})`
+        `linear-gradient(-225deg, ${colorGenerationArray[0]}, ${colorGenerationArray[1]}, ${colorGenerationArray[2]})`
       );
     }
-  
+
     var colorScale = chroma
       .scale(colorGenerationArray)
-      .mode(method)
+      .mode(colorGenerationMode)
       .colors(numberOfOutputColors);
     var uniqueColorScale = [...Array.from(new Set(colorScale))];
-    setColorList(uniqueColorScale);
-  }, [selectedColors, numberOfInputColors, numberOfOutputColors, method]);
+    dispatch(paletteActions.setOutputColors({ outputColors: uniqueColorScale }));
+  }, [
+    selectedColors,
+    numberOfInputColors,
+    numberOfOutputColors,
+    colorGenerationMode,
+  ]);
 
   useEffect(() => {
     document.title = "Cromatic";
@@ -64,7 +78,7 @@ function App() {
       <Navbar />
       <div className="main-content d-flex align-items-center justify-content-center">
         <div className="container">
-          <ColorDisplay colorList={colorList} />
+          <ColorDisplay colorList={outputColors} />
           <PaletteProperties />
         </div>
       </div>

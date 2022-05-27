@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ButtonGroup, Form, ToggleButton } from "react-bootstrap";
+import { Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
 import { HexColorPicker } from "react-colorful";
 import { useDispatch } from "react-redux";
 import { useStoreSelector } from "../Store";
@@ -10,6 +10,7 @@ export default function PaletteProperties() {
   const selectedColors = useStoreSelector(
     (state) => state.palette.selectedColors
   );
+  const outputColors = useStoreSelector((state) => state.palette.outputColors);
   const numberOfInputColors = useStoreSelector(
     (state) => state.palette.numberOfInputColors
   );
@@ -32,21 +33,35 @@ export default function PaletteProperties() {
     );
   };
 
+  const downloadPaletteAsTxt = () => {
+    const element = document.createElement("a");
+    const file = new Blob([...outputColors.map((x) => x + ", ")], {
+      type: "text/plain",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "newPalette.txt";
+    document.body.appendChild(element);
+    element.click();
+  };
+
   const radios = [
     { name: "Solo", value: 1 },
     { name: "Duo", value: 2 },
     { name: "Trio", value: 3 },
   ];
+
   return (
     <div>
-      <div className="d-flex flex-column justify-content-center container">
+      <div className="container d-flex flex-column justify-content-center">
         <div className="row text-center">
           <h3 className="mb-2">
-            <span className="badge bg-dark">Properties</span>
+            <div className="badge bg-dark">
+              <h4 className="m-0">Properties</h4>
+            </div>
           </h3>
         </div>
         <div className="d-flex justify-content-center mb-2">
-          <div className="d-inline-flex overflow-auto p-2 rounded bg-dark">
+          <div className="d-inline-flex overflow-auto p-1 rounded bg-dark">
             <HexColorPicker
               style={{ width: "10em", height: "5em" }}
               className="m-3"
@@ -103,7 +118,24 @@ export default function PaletteProperties() {
         </div>
       </div>
 
-      <div className="d-flex mb-2">
+      <ButtonGroup className="d-flex justify-content-center">
+        {radios.map((radio, idx) => (
+          <ToggleButton
+            className="shadow p-3"
+            key={idx}
+            id={`radio-${idx}`}
+            type="radio"
+            variant="dark"
+            value={idx + 1}
+            checked={numberOfInputColors === radio.value}
+            onChange={(e) => setNumberOfInputColors(e)}
+          >
+            {radio.name}
+          </ToggleButton>
+        ))}
+      </ButtonGroup>
+
+      <div className="d-flex my-2">
         <Form.Select
           className="me-1"
           size="sm"
@@ -135,21 +167,11 @@ export default function PaletteProperties() {
           <option value="lrgb">Linear rgb</option>
         </Form.Select>
       </div>
-      <ButtonGroup className="d-flex justify-content-center">
-        {radios.map((radio, idx) => (
-          <ToggleButton
-            className="shadow p-3"
-            key={idx}
-            id={`radio-${idx}`}
-            type="radio"
-            variant="dark"
-            value={idx + 1}
-            checked={numberOfInputColors === radio.value}
-            onChange={(e) => setNumberOfInputColors(e)}
-          >
-            {radio.name}
-          </ToggleButton>
-        ))}
+
+      <ButtonGroup className="w-100">
+        <Button className="w-100 btn btn-dark" onClick={downloadPaletteAsTxt}>
+          Download Palette
+        </Button>
       </ButtonGroup>
     </div>
   );
