@@ -10,6 +10,7 @@ import { paletteActions } from "./Store/PaletteSlice";
 
 function App() {
   const dispatch = useDispatch();
+  const darkenindex = 0.9;
   const selectedColors = useStoreSelector(
     (state) => state.palette.selectedColors
   );
@@ -34,11 +35,18 @@ function App() {
       selectedColors.every((color) => color == selectedColors[1])
     ) {
       colorGenerationArray = ["white", selectedColors[0], "black"];
-      setBackgroundString(`${colorGenerationArray[1]}`);
+      var darkenedColorPalette = selectedColors.map((color) => {
+        return chroma(color).darken(darkenindex).hex();
+      });
+      setBackgroundString(`${darkenedColorPalette[0]}`);
     } else if (numberOfInputColors == 2) {
       colorGenerationArray = [selectedColors[0], selectedColors[1]];
+      var darkenedColorPalette = selectedColors.map((color) => {
+        return chroma(color).darken(darkenindex).hex();
+      });
+
       setBackgroundString(
-        `linear-gradient(-225deg, ${colorGenerationArray[0]}, ${colorGenerationArray[1]})`
+        `linear-gradient(-225deg, ${darkenedColorPalette[0]}, ${darkenedColorPalette[1]})`
       );
     } else if (numberOfInputColors == 3) {
       colorGenerationArray = [
@@ -46,8 +54,11 @@ function App() {
         selectedColors[1],
         selectedColors[2],
       ];
+      var darkenedColorPalette = selectedColors.map((color) => {
+        return chroma(color).darken(darkenindex).hex();
+      });
       setBackgroundString(
-        `linear-gradient(-225deg, ${colorGenerationArray[0]}, ${colorGenerationArray[1]}, ${colorGenerationArray[2]})`
+        `linear-gradient(-225deg, ${darkenedColorPalette[0]}, ${darkenedColorPalette[1]}, ${darkenedColorPalette[2]})`
       );
     }
 
@@ -72,7 +83,7 @@ function App() {
     <div
       className="App"
       style={{
-        background: backgroundString,
+        background: backgroundString
       }}
     >
       <Navbar />

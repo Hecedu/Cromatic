@@ -1,10 +1,15 @@
 import React from "react";
 import Ripples from "react-ripples";
+import { useStoreSelector } from "../Store";
 
 interface ColorDisplayProps {
   colorList: string[];
 }
 export default function ColorDisplay({ colorList }: ColorDisplayProps) {
+  const numberOfOutputColors = useStoreSelector(
+    (state) => state.palette.numberOfOutputColors
+  );
+
   return (
     <div className="d-flex container flex-column">
       <div className="d-flex row justify-content-center mb-2">
@@ -12,28 +17,25 @@ export default function ColorDisplay({ colorList }: ColorDisplayProps) {
           <h4 className="m-0">Palette</h4>
         </div>
       </div>
-      <div className="d-flex row justify-content-center mb-2">
-        <div className="badge bg-dark w-auto">
-          <p className="m-0">Click/Tap color to copy to clipboard</p>
-        </div>
-      </div>
-      <div className="d-flex justify-content-center mb-2 container">
-        <div className="d-flex flex-wrap justify-content-center bg-dark rounded-3 shadow text-center w-100">
+      <div className="mb-2 container bg-dark shadow rounded-3">
+        <div className="d-flex text-center w-100 my-3">
           {colorList.map((c) => (
-            <div style={{ width: "calc(100% / 3)" }}>
+            <div className="w-100 mx-1" style={{ height: "20vh" }}>
               <Ripples
-                className="p-2 text-center rounded-3 w-100"
+                className="text-center w-100 h-100"
                 onClick={() => navigator.clipboard.writeText(c)}
               >
-                <div
-                  className="w-100 py-4 rounded"
-                  style={{ backgroundColor: c }}
-                >
-                  <p className="my-1 shadow-sm bg-white w-100">{c}</p>
+                <div className="w-100 py-5 d-flex align-content-center" style={{ backgroundColor: c }}>
+                  <div className="d-none d-md-block align-self-center shadow-sm bg-white w-100">{c}</div>
                 </div>
               </Ripples>
             </div>
           ))}
+        </div>
+      </div>
+      <div className="d-flex row justify-content-center mb-2">
+        <div className="badge bg-dark w-auto">
+          <p className="m-0">Click/Tap color to copy to clipboard</p>
         </div>
       </div>
     </div>
