@@ -11,7 +11,7 @@ interface PaletteState {
 }
 
 const initialPaletteState: PaletteState = {
-    selectedColors: ['#942c2c','#942c2c','#942c2c'],
+    selectedColors: ['#942c2c','#2c9494','#60942c'],
     outputColors: [],
     colorGenerationMode: 'lab',
     numberOfInputColors: 1,
