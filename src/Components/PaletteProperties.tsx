@@ -7,6 +7,7 @@ import { paletteActions } from "../Store/PaletteSlice";
 
 export default function PaletteProperties() {
   const dispatch = useDispatch();
+  const [radioValue, setRadioValue] = useState('1');
   const selectedColors = useStoreSelector(
     (state) => state.palette.selectedColors
   );
@@ -24,6 +25,7 @@ export default function PaletteProperties() {
         numberOfInputColors: e.currentTarget.value,
       })
     );
+    setRadioValue(e.currentTarget.value);
   };
   const setNumberOfOutputColors = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(
@@ -45,9 +47,9 @@ export default function PaletteProperties() {
   };
 
   const radios = [
-    { name: "Solo", value: 1 },
-    { name: "Duo", value: 2 },
-    { name: "Trio", value: 3 },
+    { name: "Solo", value: '1' },
+    { name: "Duo", value: '2' },
+    { name: "Trio", value: '3' },
   ];
 
   return (
@@ -121,13 +123,14 @@ export default function PaletteProperties() {
       <ButtonGroup className="d-flex justify-content-center">
         {radios.map((radio, idx) => (
           <ToggleButton
+            name="radios"
+            type="radio"
+            id={`radio-${idx}`}
             className="shadow p-3"
             key={idx}
-            id={`radio-${idx}`}
-            type="radio"
             variant="dark"
-            value={idx + 1}
-            checked={numberOfInputColors === radio.value}
+            value={radio.value}
+            checked={radioValue === radio.value}
             onChange={(e) => setNumberOfInputColors(e)}
           >
             {radio.name}
