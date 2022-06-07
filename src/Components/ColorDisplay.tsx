@@ -20,7 +20,7 @@ export default function ColorDisplay({ colorList }: ColorDisplayProps) {
       <div className="mb-2 container bg-dark shadow rounded-3">
         <div className="d-flex text-center w-100 my-3">
           {colorList.map((c) => (
-            <div className="w-100 mx-1" style={{ height: "20vh" }}>
+            <div className="w-100 mx-1" key={c} style={{ height: "20vh" }}>
               <Ripples
                 className="text-center w-100 h-100"
                 onClick={() => navigator.clipboard.writeText(c)}
