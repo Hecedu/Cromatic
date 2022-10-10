@@ -1,7 +1,8 @@
 # Cromatic
 Online palette generators are extremely hard to use and cluttered with ads and hard to use interfaces.
 Let's make them easier!
-Cromatic is a template for what a really user focused generator would look like. The goal is not to get you to create an account or purchase a subscription, the goal is to help you create color palettes easily.
+Cromatic is a template for what a really user focused color generator would look like. 
+The goal is not to get you to create an account or purchase a subscription but to help you create color palettes easily.
 
 ## Is there an online instance I can access?
 yes! https://hecedu.github.io/Cromatic/
@@ -16,4 +17,4 @@ yes! https://hecedu.github.io/Cromatic/
 Of course! Send me a message or post an issue with your requested change. I will be happy to add it!
 
 ## Can I collaborate or make changes to this project?
-Cromatic is a personal learning projects. You are welcome to create your own fork, but I would rather do everything on my own :)
+Cromatic is a personal learning project. You are welcome to create your own fork, but I would rather do everything on my own :)
