@@ -37,7 +37,7 @@ export default function Navbar() {
           aria-current="page"
           href="https://hectormagana.art"
         >
-          Hector Magana
+          © 2022 B-Llage
         </a>
       </div>
     </nav>

@@ -16,7 +16,7 @@ export default function PaletteProperties() {
     (state) => state.palette.numberOfInputColors
   );
 
-  const colorPickerContainerStyle = "h-100 m-1 w-auto p-3 rounded-2 bg-dark shadow";
+  const colorPickerContainerStyle = "h-100 mx-1 w-auto p-3 rounded-3 bg-dark shadow";
 
   const setMethod = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(paletteActions.setMethod({ method: e.target.value }));
@@ -56,7 +56,7 @@ export default function PaletteProperties() {
 
   return (
     <div>
-      <div className="container d-flex flex-column justify-content-center">
+      <div className="d-flex flex-column justify-content-center">
         <div className="row text-center">
           <h3 className="mb-2">
             <div className="badge bg-dark">
@@ -65,12 +65,11 @@ export default function PaletteProperties() {
           </h3>
         </div>
         <div className="mb-2">
-          <div className="d-flex align-items-center justify-content-center" style={{ height: "10em" }}>
+          <div className="container d-flex align-items-center justify-content-center w-100 p-0" style={{ height: "18vh" }}>
             <div className={colorPickerContainerStyle}>
               <HexColorPicker
-                className="w-100"
-                style={{ height: "85%" }}
-                color={selectedColors[0]}
+                className="w-auto"
+                style={{ height: "80%" }}
                 onChange={(color) => {
                   dispatch(
                     paletteActions.setSelectedColors({
@@ -85,7 +84,7 @@ export default function PaletteProperties() {
               />
               <HexColorInput
                 className="w-100 form-control text-center"
-                style={{ height: "15%" }}
+                style={{ height: "20%" }}
                 color={selectedColors[0]}
                 onChange={(color) => {
                   dispatch(
@@ -103,8 +102,8 @@ export default function PaletteProperties() {
             {numberOfInputColors > 1 ? (
               <div className={colorPickerContainerStyle}>
                 <HexColorPicker
-                  className="w-100"
-                  style={{ height: "85%" }}
+                  className="w-auto"
+                  style={{ height: "80%" }}
                   color={selectedColors[1]}
                   onChange={(color) => {
                     dispatch(
@@ -120,7 +119,7 @@ export default function PaletteProperties() {
                 />
                 <HexColorInput
                   className="w-100 form-control text-center"
-                  style={{ height: "15%" }}
+                  style={{ height: "20%" }}
                   color={selectedColors[1]}
                   onChange={(color) => {
                     dispatch(
@@ -139,8 +138,8 @@ export default function PaletteProperties() {
             {numberOfInputColors > 2 ? (
               <div className={colorPickerContainerStyle}>
                 <HexColorPicker
-                  className="w-100"
-                  style={{ height: "85%" }}
+                  className="w-auto"
+                  style={{ height: "80%" }}
                   color={selectedColors[2]}
                   onChange={(color) => {
                     dispatch(
@@ -156,7 +155,7 @@ export default function PaletteProperties() {
                 />
                 <HexColorInput
                   className="w-100 form-control text-center"
-                  style={{ height: "15%" }}
+                  style={{ height: "20%" }}
                   color={selectedColors[2]}
                   onChange={(color) => {
                     dispatch(
@@ -194,6 +193,21 @@ export default function PaletteProperties() {
         ))}
       </ButtonGroup>
 
+      { /*
+        <div className="d-flex w-100 mt-2">
+        <Button className="w-100 btn btn-dark" onClick={downloadPaletteAsTxt}>
+          Desaturate
+        </Button>
+        <Button className="w-100 btn btn-dark mx-1" onClick={downloadPaletteAsTxt}>
+          Average
+        </Button>
+        <Button className="w-100 btn btn-dark" onClick={downloadPaletteAsTxt}>
+          Saturate
+        </Button>
+      </div>
+      */
+      }
+
       <div className="d-flex my-2">
         <Form.Select
           className="me-1"
@@ -207,8 +221,13 @@ export default function PaletteProperties() {
             Detail
           </option>
           <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
           <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
           <option value={9}>9</option>
+          <option value={9}>10</option>
         </Form.Select>
         <Form.Select
           className="ms-1"
