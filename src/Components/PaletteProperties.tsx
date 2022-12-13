@@ -70,6 +70,7 @@ export default function PaletteProperties() {
               <HexColorPicker
                 className="w-auto"
                 style={{ height: "80%" }}
+                color={selectedColors[0]}
                 onChange={(color) => {
                   dispatch(
                     paletteActions.setSelectedColors({
